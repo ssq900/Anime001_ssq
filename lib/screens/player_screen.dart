@@ -61,7 +61,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
             if (url.contains('.m3u8')) {
               _playDirect(url);
               // 修改了这里，使用最新版的 stop() 替代原来的 stopLoading()
-              _webController?.stop();
+              // _webController?.stop();
             }
           },
           onPageFinished: (url) async {
