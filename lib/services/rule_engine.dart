@@ -98,7 +98,7 @@ class RuleEngine {
     final response = await _dio.get(_absolute(rule.baseUrl, url));
     final data = response.data;
     if (rule.searchMode == 'api' && data is Map) {
-      return _jsonPathList(data, rule.searchList, rule.searchName, rule.searchLink);
+      return _jsonPathList(Map<String, dynamic>.from(data), rule.searchList, rule.searchName, rule.searchLink);
     }
     if (data is String) {
       final doc = html_parser.parse(data);
@@ -111,7 +111,7 @@ class RuleEngine {
     final response = await _dio.get(detailUrl);
     final data = response.data;
     if (data is Map) {
-      return _jsonPathEpisodes(data, rule.episodeList, rule.episodeName, rule.episodeLink);
+      return _jsonPathEpisodes(Map<String, dynamic>.from(data), rule.episodeList, rule.episodeName, rule.episodeLink);
     }
     if (data is String) {
       final doc = html_parser.parse(data);
@@ -129,7 +129,7 @@ class RuleEngine {
       final name = _pickText(el, nameXPath);
       final href = _pickAttr(el, linkXPath, 'href');
       if (name.isNotEmpty && href.isNotEmpty) {
-        results.add(SearchResult(name: name, link: _absolute(doc.baseUrl ?? '', href)));
+        results.add(SearchResult(name: name, link: _absolute('', href)));
       }
     }
     return results;
