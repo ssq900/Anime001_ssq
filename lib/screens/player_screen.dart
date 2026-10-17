@@ -55,7 +55,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
       appBar: AppBar(title: Text(widget.title)),
       body: _controller == null
           ? const Center(child: CircularProgressIndicator())
-          : VideoPlayer(_controller!),
+          : VideoPlayer(controller: _controller!),ayer(_controller!),
     );
   }
 }
