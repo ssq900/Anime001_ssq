@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_video_player/flutter_cache_video_player.dart';
+import 'package:video_player/video_player.dart';
 import '../services/storage_service.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -38,7 +38,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
   void _startProgressTimer(VideoPlayerController controller) {
     Future.delayed(const Duration(seconds: 10), () async {
       if (!mounted || widget.subjectId == null || widget.storage == null) return;
-      await widget.storage!.saveHistory(widget.subjectId!, widget.title, '当前集', controller.value.position);
+      await widget.storage!.saveHistory(
+        widget.subjectId!, 
+        widget.title, 
+        '当前集', 
+        controller.value.position
+      );
       if (mounted) _startProgressTimer(controller);
     });
   }
@@ -51,11 +56,26 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_controller == null) {
+      return Scaffold(appBar: AppBar(title: Text(widget.title)), body: const Center(child: CircularProgressIndicator()));
+    }
+    
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      body: _controller == null
-          ? const Center(child: CircularProgressIndicator())
-          : VideoPlayer(controller: _controller!),ayer(_controller!),
+      body: Center(
+        child: AspectRatio(
+          aspectRatio: _controller!.value.aspectRatio,
+          child: VideoPlayer(_controller!),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _controller!.value.isPlaying ? _controller!.pause() : _controller!.play();
+          });
+        },
+        child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow),
+      ),
     );
   }
 }
