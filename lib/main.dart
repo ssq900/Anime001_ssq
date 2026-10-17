@@ -42,8 +42,14 @@ class _AnimeAppState extends State<AnimeApp> {
       home: HomeScreen(
         onThemeChanged: (mode) => setState(() => _themeMode = mode),
         onOpenSearch: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScreen(rules: _rules)));
-        },
+  if (_rules.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('还没有导入动漫源规则，请先点齿轮设置！')),
+    );
+    return;
+  }
+  Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScreen(rules: _rules)));
+},
         onOpenWatchlist: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) => WatchlistScreen(storage: widget.storage)));
         },
