@@ -1,10 +1,11 @@
-baseUrl: 'https://api.bangumi.lol',import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 import '../models/anime.dart';
 
 class BangumiService {
   final Dio _dio = Dio(BaseOptions(
+    // 这里使用了社区提供的反代镜像
     baseUrl: 'https://api.bangumi.lol',
-    headers: {'User-Agent': 'AnimeApp/1.0 (https://github.com/yourname/anime_app)'},
+    headers: {'User-Agent': 'AnimeApp/1.0 (https://github.com/ssq900/anime_app)'},
   ));
 
   Future<List<List<Anime>>> getCalendar() async {
