@@ -3,7 +3,7 @@ import '../models/anime.dart';
 
 class BangumiService {
   final Dio _dio = Dio(BaseOptions(
-    baseUrl: 'https://api.bgm.tv',
+    baseUrl: 'https://bgmapi.anibt.net',
     headers: {'User-Agent': 'AnimeApp/1.0 (https://github.com/yourname/anime_app)'},
   ));
 
