@@ -3,6 +3,7 @@ import 'services/storage_service.dart';
 import 'services/rule_engine.dart';
 import 'screens/home_screen.dart';
 import 'screens/search_screen.dart';
+import 'screens/rule_manage_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,29 +37,18 @@ class _AnimeAppState extends State<AnimeApp> {
       title: '看番',
       debugShowCheckedModeBanner: false,
       themeMode: _themeMode,
-      theme: ThemeData(
-        colorSchemeSeed: Colors.deepPurple,
-        brightness: Brightness.light,
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorSchemeSeed: Colors.deepPurple,
-        brightness: Brightness.dark,
-        useMaterial3: true,
-      ),
+      theme: ThemeData(colorSchemeSeed: Colors.deepPurple, brightness: Brightness.light, useMaterial3: true),
+      darkTheme: ThemeData(colorSchemeSeed: Colors.deepPurple, brightness: Brightness.dark, useMaterial3: true),
       home: HomeScreen(
         onThemeChanged: (mode) => setState(() => _themeMode = mode),
         onOpenSearch: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => SearchScreen(rules: _rules)),
-          );
+          Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScreen(rules: _rules)));
         },
         onOpenWatchlist: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => WatchlistScreen(storage: widget.storage)),
-          );
+          Navigator.push(context, MaterialPageRoute(builder: (_) => WatchlistScreen(storage: widget.storage)));
+        },
+        onOpenSettings: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => RuleManageScreen(storage: widget.storage)));
         },
       ),
     );
@@ -82,10 +72,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
       appBar: AppBar(title: const Text('追番 & 历史')),
       body: ListView(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(12),
-            child: Text('追番列表', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-          ),
+          const Padding(padding: EdgeInsets.all(12), child: Text('追番列表', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))),
           ...watch.map((e) => ListTile(
                 title: Text(e.value.toString()),
                 trailing: IconButton(
@@ -98,10 +85,7 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
               )),
           if (watch.isEmpty) const Padding(padding: EdgeInsets.all(12), child: Text('还没有追番')),
           const Divider(),
-          const Padding(
-            padding: EdgeInsets.all(12),
-            child: Text('观看历史', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-          ),
+          const Padding(padding: EdgeInsets.all(12), child: Text('观看历史', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))),
           ...history.map((e) {
             final v = e.value as Map;
             return ListTile(

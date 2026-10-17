@@ -6,7 +6,8 @@ class HomeScreen extends StatefulWidget {
   final ValueChanged<ThemeMode> onThemeChanged;
   final VoidCallback onOpenSearch;
   final VoidCallback onOpenWatchlist;
-  const HomeScreen({super.key, required this.onThemeChanged, required this.onOpenSearch, required this.onOpenWatchlist});
+  final VoidCallback onOpenSettings;
+  const HomeScreen({super.key, required this.onThemeChanged, required this.onOpenSearch, required this.onOpenWatchlist, required this.onOpenSettings});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -42,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(icon: const Icon(Icons.search), onPressed: widget.onOpenSearch),
           IconButton(icon: const Icon(Icons.bookmark), onPressed: widget.onOpenWatchlist),
+          IconButton(icon: const Icon(Icons.settings), onPressed: widget.onOpenSettings),
           PopupMenuButton<ThemeMode>(
             icon: const Icon(Icons.brightness_6),
             onSelected: widget.onThemeChanged,
@@ -63,8 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       return Center(child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(_error!),
-          const SizedBox(height: 12),
+          Padding(padding: const EdgeInsets.all(16), child: Text(_error!, textAlign: TextAlign.center)),
           ElevatedButton(onPressed: _load, child: const Text('重试')),
         ],
       ));
