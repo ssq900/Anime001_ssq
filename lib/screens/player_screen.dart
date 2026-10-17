@@ -38,7 +38,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
     final controller = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
     await controller.initialize();
     
-    // 恢复历史记录
     final history = widget.storage?.getHistory(widget.subjectId ?? '');
     if (history != null && history['position'] is int) {
       final pos = Duration(milliseconds: history['position'] as int);
@@ -61,7 +60,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
           onPageStarted: (url) {
             if (url.contains('.m3u8')) {
               _playDirect(url);
-              _webController?.stopLoading();
+              // 修改了这里，使用最新版的 stop() 替代原来的 stopLoading()
+              _webController?.stop();
             }
           },
           onPageFinished: (url) async {
@@ -104,7 +104,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
     if (_isExtracting) {
       return Stack(
         children: [
-          WebViewWidget(controller: _webController!),
+          if (_webController != null) WebViewWidget(controller: _webController!),
           const Center(child: CircularProgressIndicator()),
         ],
       );
