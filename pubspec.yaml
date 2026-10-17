@@ -15,7 +15,7 @@ dependencies:
   json_path: ^0.7.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  flutter_cache_video_player: ^1.10.0
+  flutter_cache_video_player: any
   dart_cast: ^0.2.0
   path_provider: ^2.1.5
 
