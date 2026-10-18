@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/anime.dart';
-import '../services/bangumi_service.dart';
+import '../services/anilist_service.dart';
 
 class HomeScreen extends StatefulWidget {
   final ValueChanged<ThemeMode> onThemeChanged;
@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _service = BangumiService();
+  final _service = AniListService();
   List<List<Anime>>? _calendar;
   bool _loading = true;
   String? _error;
